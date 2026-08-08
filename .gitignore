@@ -1,0 +1,36 @@
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Secrets
+.env
+
+# Byte-compiled / cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# PyInstaller build output
+build/
+dist/
+*.spec
+
+# Inno Setup output
+Output/
+mysetup.exe
+
+# Local data (now written to %LOCALAPPDATA%\VARVIS at runtime,
+# but keep these ignored in case dev copies linger in the project)
+logs/
+database/
+
+# Audio asset not meant for version control
+jarvis.mp3
+
+# Editor / OS cruft
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
