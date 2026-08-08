@@ -14,6 +14,8 @@ from PySide6.QtWidgets import (
 )
 
 from core.logger import Logger
+from core.config import has_api_key, setup_api_key
+
 
 
 def ResourcePath(*parts):
@@ -53,15 +55,59 @@ class LoadWorker(QObject):
         self.logMessage.emit("Initialising....")
         Logger.info("VARVIS starting")
 
+        # =========================
+        # API Setup
+        # =========================
+
+        if not has_api_key():
+
+            self.logMessage.emit(
+                "Connecting to VARVIS services..."
+            )
+
+            if setup_api_key():
+
+                self.logMessage.emit(
+                    "AI configuration ready."
+                )
+
+            else:
+
+                self.logMessage.emit(
+                    "AI configuration failed."
+                )
+
+                self.finished.emit()
+                return
+
+        else:
+
+            self.logMessage.emit(
+                "AI configuration loaded."
+            )
+
+        # =========================
+        # Application Loading
+        # =========================
+
         Apps = LoadApps()
 
         if not Apps:
-            self.logMessage.emit("Scanning for installed applications...")
+
+            self.logMessage.emit(
+                "Scanning for installed applications..."
+            )
+
             ScanForApps()
+
         else:
-            self.logMessage.emit("Loaded applications from database.")
+
+            self.logMessage.emit(
+                "Loaded applications from database."
+            )
 
         self.logMessage.emit("Hello, Vasudev!")
+
         Logger.info("Startup sequence complete")
 
         self.finished.emit()
